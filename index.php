@@ -11,7 +11,6 @@
           $("#movieList").hide();
           $('[data-search]').on('keyup', function() {
 	          var searchVal = $(this).val();
-
 	        if ( searchVal != '' ) {
             $.ajax({
                     url:'search.php',
@@ -20,6 +19,7 @@
                       searchVal:searchVal
                     },
                    success:function(response){
+                    try {
                     console.log(response);
                     var data = JSON.parse(response);
                     console.log(data);
@@ -31,10 +31,13 @@
                                 }));
                             });
                       $("#movieList").show();
-
+                          } catch (error) {
+                            console.error('Error parsing JSON:', error);
+                        }
                    }
                 });
 	        } else {
+            $('#movieList').empty();
 	}
 });
         });
